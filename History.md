@@ -1,3 +1,8 @@
+# Version 3.6.0
+Release date: unreleased
+
+* `Capybara.predicates_wait` option which sets whether or not Capybaras predicate methods (`has_css?`, `has_selector?`, `has_text?`, etc.) default to using waiting/retrying behavior (defaults to true)
+
 # Version 3.5.0
 Release date: 2018-08-01
 
