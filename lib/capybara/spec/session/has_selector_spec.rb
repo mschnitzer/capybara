@@ -62,6 +62,7 @@ Capybara::SpecHelper.spec '#has_selector?' do
     it 'should respect visibility setting' do
       expect(@session).to have_selector(:id, 'hidden-text', text: 'Some of this text is hidden!', visible: false)
       expect(@session).not_to have_selector(:id, 'hidden-text', text: 'Some of this text is hidden!', visible: true)
+      expect(@session).not_to have_selector(:id, 'hidden-text', :visible, text: 'Some of this text is hidden!')
       Capybara.ignore_hidden_elements = false
       expect(@session).to have_selector(:id, 'hidden-text', text: 'Some of this text is hidden!', visible: false)
       Capybara.visible_text_only = true
@@ -92,6 +93,7 @@ Capybara::SpecHelper.spec '#has_selector?' do
       it 'should only match elements that match exactly when true' do
         expect(@session).to have_selector(:id, 'h2one', text: 'Header Class Test One', exact_text: true)
         expect(@session).to have_no_selector(:id, 'h2one', text: 'Header Class Test', exact_text: true)
+        expect(@session).to have_no_selector(:id, 'h2one', :exact_text, text: 'Header Class Test')
       end
 
       it 'should match substrings when false' do

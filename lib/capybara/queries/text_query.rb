@@ -4,7 +4,7 @@ module Capybara
   # @api private
   module Queries
     class TextQuery < BaseQuery
-      def initialize(type = nil, expected_text, session_options:, **options) # rubocop:disable Style/OptionalArguments
+      def initialize(type = nil, expected_text, *true_options, session_options:, **options) # rubocop:disable Style/OptionalArguments
         @type = if type.nil?
           Capybara.ignore_hidden_elements || Capybara.visible_text_only ? :visible : :all
         else
@@ -12,7 +12,12 @@ module Capybara
         end
 
         @expected_text = expected_text.is_a?(Regexp) ? expected_text : expected_text.to_s
-        @options = options
+        @options = options.dup
+
+        while true_options.last.is_a?(Symbol)
+          @options[true_options.pop] = true
+        end
+
         super(@options)
         self.session_options = session_options
 

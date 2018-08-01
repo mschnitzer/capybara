@@ -16,12 +16,15 @@ module Capybara
                      &filter_block)
         @resolved_node = nil
         @options = options.dup
-        super(@options)
-        self.session_options = session_options
-
         @selector = find_selector(args[0].is_a?(Symbol) ? args.shift : args[0])
         @locator = args.shift
         @filter_block = filter_block
+        while args.last.is_a?(Symbol)
+          @options[args.pop] = true
+        end
+        super(@options)
+        self.session_options = session_options
+
 
         raise ArgumentError, "Unused parameters passed to #{self.class.name} : #{args}" unless args.empty?
 
